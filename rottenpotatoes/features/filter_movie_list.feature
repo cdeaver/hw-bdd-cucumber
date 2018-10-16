@@ -24,10 +24,20 @@ Background: movies have been added to database
 
 Scenario: restrict to movies with 'PG' or 'R' ratings
   # enter step(s) to check the 'PG' and 'R' checkboxes
+  Given I am on the RottenPotatoes home page
+  When I check the following ratings: PG R
+ 
   # enter step(s) to uncheck all other checkboxes
+  When I uncheck the following ratings: G PG-13 NC-17
   # enter step to "submit" the search form on the homepage
+  Then I press "Refresh"
   # enter step(s) to ensure that PG and R movies are visible
+  Then I should see the following movies: PG R # chagnge to movie titles
   # enter step(s) to ensure that other movies are not visible
-
+  Then I should not see the following movies: G PG-13 NC-17
+  
 Scenario: all ratings selected
-  # see assignment
+  Given I am on the RottenPotatoes home page
+  When I check the following ratings: G PG PG-13 NC-17 R
+  Then I press "Refresh"
+  Then I should see all the movies
